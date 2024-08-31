@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct investment {
+    char name[50];
+    double amount;
+    double current_value;
+};
+
+int main() {
+    int num_investments;
+    struct investment *portfolio;
+
+    printf("How many investments do you want to track? ");
+    scanf("%d", &num_investments);
+
+    portfolio = (struct investment *)malloc(num_investments * sizeof(struct investment));
+
+    for (int i = 0; i < num_investments; i++) {
+        printf("\nInvestment %d:\n", i + 1);
+        printf("Name: ");
+        scanf("%s", portfolio[i].name);
+        printf("Initial investment amount: ");
+        scanf("%lf", &portfolio[i].amount);
+        printf("Current value: ");
+        scanf("%lf", &portfolio[i].current_value);
+    }
+
+    printf("\nYour investment portfolio:\n");
+    for (int i = 0; i < num_investments; i++) {
+        printf("%s: $%.2f (initial), $%.2f (current)\n",
+               portfolio[i].name, portfolio[i].amount, portfolio[i].current_value);
+    }
+
+    
+    double total_value = 0;
+    double total_gain_loss = 0;
+    for (int i = 0; i < num_investments; i++) {
+        total_value += portfolio[i].current_value;
+        total_gain_loss += portfolio[i].current_value - portfolio[i].amount;
+    }
+
+    printf("\nTotal portfolio value: $%.2f\n", total_value);
+    printf("Total gain/loss: $%.2f\n", total_gain_loss);
+
+    free(portfolio);
+    return 0;
+}
